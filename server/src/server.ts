@@ -1,13 +1,12 @@
 import fastify from 'fastify'
-import { PrismaClient } from '@prisma/client'
+import { momoriesRoutes } from './routes/memories'
+import cors from '@fastify/cors'
 
 const app = fastify()
-const prisma = new PrismaClient()
 
-app.get('/hello', async () => {
-  const users = await prisma.user.findMany()
-
-  return users
+app.register(momoriesRoutes)
+app.register(cors, {
+  origin: true, // Todas URLs de front-end poderão acessar nosso back-end
 })
 
 app
