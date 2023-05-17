@@ -2,6 +2,7 @@
   "compilerOptions": {
      "strict": true,
     "baseUrl": "./",
+    "types": ["nativewind/types"],
     "paths": {
       "@dtos/*": [
         "./src/dtos/*"
