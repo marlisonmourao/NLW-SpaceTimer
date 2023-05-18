@@ -1,3 +1,11 @@
+import { useEffect } from 'react'
+import { styled } from 'nativewind'
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
+import { BaiJamjuree_700Bold } from '@expo-google-fonts/bai-jamjuree'
+import * as WebBrowser from 'expo-web-browser'
+import * as SecureStore from 'expo-secure-store'
+import { useRouter } from 'expo-router'
+
 import {
   StatusBar,
   ImageBackground,
@@ -5,7 +13,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native'
-import { styled } from 'nativewind'
 
 import {
   useFonts,
@@ -13,20 +20,68 @@ import {
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto'
 
-import { BaiJamjuree_700Bold } from '@expo-google-fonts/bai-jamjuree'
-
 import blurBg from '@assets/bg-blur.png'
 import Stripes from '@assets/stripes.svg'
 import Logo from '@assets/nlwSpaceTime.svg'
+import { api } from '../src/lib/api'
+
+WebBrowser.maybeCompleteAuthSession()
 
 const StyledStripes = styled(Stripes)
 
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint:
+    'https://github.com/settings/connections/applications/e6de9577b1a2a196a5e5',
+}
+
 export default function App() {
+  const router = useRouter()
+
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
     Roboto_700Bold,
     BaiJamjuree_700Bold,
   })
+
+  const [, response, signinWithGithub] = useAuthRequest(
+    {
+      clientId: 'e6de9577b1a2a196a5e5',
+      scopes: ['identity'],
+      redirectUri: makeRedirectUri({
+        scheme: 'nlwspacetime',
+      }),
+    },
+    discovery,
+  )
+
+  async function Login() {
+    await signinWithGithub()
+  }
+
+  async function handleGithubOauthCode(code: string) {
+    const response = await api.post('/register', { code })
+
+    const { token } = response.data
+
+    SecureStore.setItemAsync('token', token)
+    router.push('/memories')
+  }
+
+  useEffect(() => {
+    // console.log(
+    //   makeRedirectUri({
+    //     scheme: 'nlwspacetime',
+    //   }),
+    // )
+
+    if (response?.type === 'success') {
+      const { code } = response.params
+
+      handleGithubOauthCode(code)
+    }
+  }, [response])
 
   if (!fontsLoaded) {
     return null
@@ -60,6 +115,7 @@ export default function App() {
         <TouchableOpacity
           className="rounded-full bg-green-500 px-5 py-2"
           activeOpacity={0.7}
+          onPress={Login}
         >
           <Text className="font-alt text-sm uppercase text-black">
             COMEÇAR A CADASTRAR
