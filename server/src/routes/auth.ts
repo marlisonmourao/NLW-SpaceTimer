@@ -38,7 +38,7 @@ export async function authRoutes(app: FastifyInstance) {
       id: z.number(),
       login: z.string(),
       name: z.string(),
-      avatar_url: z.string(),
+      avatar_url: z.string().url(),
     })
 
     const userInfo = userSchema.parse(userResponse.data)
@@ -63,7 +63,7 @@ export async function authRoutes(app: FastifyInstance) {
     const token = app.jwt.sign(
       {
         name: user.name,
-        avatar_url: user.avatarUrl,
+        avatarUrl: user.avatarUrl,
       },
       {
         sub: user.id,
