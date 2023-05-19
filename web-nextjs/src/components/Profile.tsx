@@ -2,8 +2,7 @@ import { getUser } from '@/lib/auth'
 import Image from 'next/image'
 
 export function Profile() {
-  const { name, avatarUrl, sub } = getUser()
-  console.log(name, avatarUrl, sub)
+  const { name, avatarUrl } = getUser()
 
   return (
     <div className="flex items-center gap-3 text-left">
@@ -17,7 +16,10 @@ export function Profile() {
 
       <p className="max-w-[160px] text-sm leading-snug">
         {name}
-        <a href="" className="block text-red-400 hover:text-red-500">
+        <a
+          href="/api/auth/logout"
+          className="block text-red-400 hover:text-red-500"
+        >
           Quero sair
         </a>
       </p>

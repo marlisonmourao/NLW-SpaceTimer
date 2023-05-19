@@ -14,8 +14,6 @@ export function getUser(): User {
     throw new Error('Unauthenticated')
   }
 
-  console.log({ token })
-
   const user: User = decode(token)
 
   return user
