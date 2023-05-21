@@ -70,7 +70,7 @@ ou
 
 ## 🎨 Layout
 
-Application layout is available in Figma:
+O layout do aplicativo está disponível no Figma:
 
 <a href="https://www.figma.com/file/O7zglIXHvJdutu05rWrLmL/C%C3%A1psula-do-tempo-%E2%80%A2-Trilha-Ignite-(Community)-(Copy)?type=design&node-id=0-1&t=yIpPLL81sU5I0723-0">
   <img alt="Made by milenakmartins" src="https://img.shields.io/badge/Acessar%20Layout%20-Figma-%2304D361">
@@ -81,4 +81,4 @@ Application layout is available in Figma:
 
 ## Feedback
 
-Would you like to speak with me? I find myself on Linkedin: [linkedin.com/in/marlison-mourao/](https://www.linkedin.com/in/marlison-mour%C3%A3o-8b1569218)
+Gostaria de falar comigo? Eu me encontro no Linkedin:[linkedin.com/in/marlison-mourao/](https://www.linkedin.com/in/marlison-mour%C3%A3o-8b1569218)
